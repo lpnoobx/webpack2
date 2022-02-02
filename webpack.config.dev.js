@@ -6,6 +6,7 @@ const htmlWebpackPlugin =require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const Doenv =require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
     //punto de entrada de la aplicacion
     entry :'./src/index.js',
@@ -19,7 +20,8 @@ module.exports = {
 
     },
     mode : 'development',
-    watch : true ,
+    devtool: 'source-map',
+  
     resolve :{
 
         extensions:['.js'],
@@ -88,11 +90,19 @@ module.exports = {
           ]
       }),
       new Doenv(),
+      new BundleAnalyzerPlugin(),
 
 
 
       
      ],
+     devServer :{
+         static : path.join(__dirname, 'dist'),
+         compress: true ,
+         historyApiFallback : true,
+         port:3006,
+         open :true ,
+     },
 
 
 }
